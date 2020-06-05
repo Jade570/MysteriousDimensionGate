@@ -23,11 +23,6 @@ function setup() {
   //aim point set-up
   aim_rad = (-cam_z) / 10 ;
 
-  //load JSON datas into target objects
-  for (let i = 0; i < Object.keys(json).length; i++) {
-    target[i] = new Target(json[i]);
-    target[i].detect = false;
-  }
 
   //default mouse sensitivity
   sensitivity = 8;
@@ -42,10 +37,6 @@ function draw() {
   background(0);
   lights();
 
-  //render target objects
-  for (let i = 0; i < Object.keys(json).length; i++) {
-    target[i].render();
-  }
 
   //camera set-up
   camera(cam_x, cam_y, cam_z, cam_cx, cam_cy, cam_cz, 0, -1, 0);
@@ -122,10 +113,7 @@ function keyReleased() {
 
 
 function mouseClicked() {
-  //check detection
-  for (let i = 0; i < Object.keys(json).length; i++) {
-    target[i].detected();
-  }
+
   //lock pointer
   requestPointerLock();
 }
