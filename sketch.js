@@ -1,9 +1,8 @@
 let target = []; //array of target objects
-let json; //json file
 let sensitivity_slider; //a visual graph of mouse sensitivity
 
 function preload() {
-  json = loadJSON("fps/targets.json");
+
 }
 
 function setup() {
