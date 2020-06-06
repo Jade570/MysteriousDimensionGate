@@ -1,12 +1,17 @@
 let target = []; //array of target objects
 let sensitivity_slider; //a visual graph of mouse sensitivity
+let skyboxShader;
+let xavierimg = [];
 
 function preload() {
-
+  skyboxShader = loadShader('skybox.vert', 'skybox.frag');
 }
 
 function setup() {
   createCanvas(windowWidth, windowHeight, WEBGL);
+  noStroke();
+  textureMode(NORMAL);
+  setupCubeMap();
 
   //camera set-up
   cam_x = 0;
@@ -109,6 +114,90 @@ function keyReleased() {
     right = false;
   }
 }
+
+function setupCubeMap() {
+  gl = this._renderer.GL;
+  tex = gl.createTexture();
+  gl.activeTexture(gl.TEXTURE0);
+  gl.bindTexture(gl.TEXTURE_CUBE_MAP, tex);
+  gl.texImage2D(gl.TEXTURE_CUBE_MAP_POSITIVE_X, 0, gl.RGBA, gl.RGBA,
+  gl.UNSIGNED_BYTE, xavierimg[0].canvas);
+  gl.texImage2D(gl.TEXTURE_CUBE_MAP_NEGATIVE_X, 0, gl.RGBA, gl.RGBA,
+  gl.UNSIGNED_BYTE, xavierimg[1].canvas);
+  gl.texImage2D(gl.TEXTURE_CUBE_MAP_POSITIVE_Y, 0, gl.RGBA, gl.RGBA,
+  gl.UNSIGNED_BYTE, xavierimg[2].canvas);
+  gl.texImage2D(gl.TEXTURE_CUBE_MAP_NEGATIVE_Y, 0, gl.RGBA, gl.RGBA,
+  gl.UNSIGNED_BYTE, xavierimg[3].canvas);
+  gl.texImage2D(gl.TEXTURE_CUBE_MAP_POSITIVE_Z, 0, gl.RGBA, gl.RGBA,
+  gl.UNSIGNED_BYTE, xavierimg[4].canvas);
+  gl.texImage2D(gl.TEXTURE_CUBE_MAP_NEGATIVE_Z, 0, gl.RGBA, gl.RGBA,
+  gl.UNSIGNED_BYTE, xavierimg[5].canvas);
+  gl.texParameteri(gl.TEXTURE_CUBE_MAP, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+  gl.texParameteri(gl.TEXTURE_CUBE_MAP, gl.TEXTURE_MAG_FILTER,
+  gl.LINEAR);
+}
+
+// draw skybox as last object to draw only necessary parts
+function renderSkyBox() {
+shader(skyboxShader);
+// set uniform variable for cubemap texture
+texLoc = gl.getUniformLocation(skyboxShader._glProgram, "cubeMap");
+gl.uniform1i(texLoc, 0);
+// set z-depth test condition from 'less' to 'less than or equal' to
+make skybox always pass z-depth test because depth buffer is usually
+inialized with +1.
+gl.depthFunc(gl.LEQUAL);
+push();
+// right
+beginShape();
+vertex(1, -1, -1, 0, 0);
+vertex(1, 1, -1, 0, 1);
+vertex(1, 1, 1, 1, 1);
+vertex(1, -1, 1, 1, 0);
+endShape();
+//left
+beginShape();
+vertex(-1, -1, 1, 0, 0);
+vertex(-1, 1, 1, 0, 1);
+vertex(-1, 1, -1, 1, 1);
+vertex(-1, -1, -1, 1, 0);
+endShape();
+// top
+beginShape();
+vertex(-1, -1, 1, 0, 0);
+vertex(-1, -1, -1, 0, 1);
+vertex(1, -1, -1, 1, 1);
+vertex(1, -1, 1, 1, 0);
+endShape();
+//bottom
+beginShape();
+vertex(-1, 1, -1, 0, 0);
+vertex(-1, 1, 1, 0, 1);
+vertex(1, 1, 1, 1, 1);
+vertex(1, 1, -1, 1, 0);
+endShape();
+//front
+beginShape();
+vertex(-1, -1, -1, 0, 0);
+vertex(-1, 1, -1, 0, 1);
+vertex(1, 1, -1, 1, 1);
+vertex(1, -1, -1, 1, 0);
+endShape();
+// back
+beginShape();
+vertex(1, -1, 1, 0, 0);
+vertex(1, 1, 1, 0, 1);
+vertex(-1, 1, 1, 1, 1);
+vertex(-1, -1, 1, 1, 0);
+endShape();
+pop();
+// return z-depth test back to default mode
+gl.depthFunc(gl.LESS);
+resetShader();
+}
+
+
+
 
 
 function mouseClicked() {
