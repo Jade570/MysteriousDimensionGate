@@ -1,4 +1,4 @@
-let portalShader, objectShader, skyboxShader;
+let starShader, portalShader, skyboxShader;
 let currentState;
 let img = [];
 let daily = [], isaac = [], tetris = [];
@@ -10,7 +10,8 @@ let cnv;
 
 function preload() {
   skyboxShader = loadShader('shader/skybox.vert', 'shader/skybox.frag');
-  objectShader = loadShader('shader/portal.vert', 'shader/portal.frag');
+  starShader = loadShader('shader/star.vert', 'shader/star.frag');
+  portalShader = loadShader('shader/portal.vert', 'shader/portal.frag');
 
   // load six cubemap textures
   img[0] = loadImage("assets/sample/right.jpg");
@@ -29,7 +30,8 @@ function preload() {
 }
 
 function setup() {
-  cnv = createCanvas(windowWidth, windowHeight, WEBGL);
+  cnv = createCanvas(min(windowWidth,windowHeight), min(windowWidth,windowHeight), WEBGL);
+
 
   noStroke();
   textureMode(NORMAL);
@@ -40,6 +42,7 @@ function setup() {
     objects[i] = new Portal_Object();
   }
   pState = 1;
+  rectMode(CENTER);
 
   ///////////////SOUND_GENERATE//////////////
   setupOscillator();
@@ -47,15 +50,18 @@ function setup() {
 }
 
 function draw() {
-  clear();
-  //rendercup();
+
+  background(255);
   renderSkyBox(); // draw skybox
 
   for (let i = 0; i<7; i++){
     objects[i].render();
   }
 
-
+  push();
+  fill(0,0,0,0);
+  setupPortal();
+  pop();
   /////////////////SOUND_GENERATE/////////////////
   updateOscillator();
   stopOscillator();
@@ -63,5 +69,5 @@ function draw() {
 }
 
 function windowResized() {
-  resizeCanvas(windowWidth, windowHeight);
+  resizeCanvas(min(windowWidth,windowHeight), min(windowWidth,windowHeight));
 }
