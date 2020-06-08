@@ -14,14 +14,14 @@ function preload() {
   portalShader = loadShader('shader/portal.vert', 'shader/portal.frag');
 
   // load six cubemap textures
-  /*
-  img[0] = loadImage("assets/sample/right.jpg");
-  img[1] = loadImage("assets/sample/left.jpg");
-  img[2] = loadImage("assets/sample/top.jpg");
-  img[3] = loadImage("assets/sample/bottom.jpg");
-  img[4] = loadImage("assets/sample/front.jpg");
-  img[5] = loadImage("assets/sample/back.jpg");
-  */
+
+  img[0] = loadImage("assets/sample/front.png");
+  img[1] = loadImage("assets/sample/back.png");
+  img[2] = loadImage("assets/sample/up.png");
+  img[3] = loadImage("assets/sample/down.png");
+  img[4] = loadImage("assets/sample/right.png");
+  img[5] = loadImage("assets/sample/left.png");
+
 
   for (let i = 0; i<7; i++){
     isaac[i] = loadImage("assets/isaac/"+i+".png");
@@ -36,7 +36,7 @@ function setup() {
 
   noStroke();
   textureMode(NORMAL);
-  //setupCubeMap();
+  setupCubeMap();
   //setupobjecttexture();
 
   for (let i = 0; i<7; i++){
@@ -53,7 +53,8 @@ function setup() {
 function draw() {
 
   background(0);
-  //renderSkyBox(); // draw skybox
+  renderSkyBox(); // draw skybox
+  orbitControl();
 
   for (let i = 0; i<7; i++){
     objects[i].render();

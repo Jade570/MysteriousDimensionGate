@@ -85,5 +85,8 @@ function setupPortal(){
   portalShader.setUniform("u_mouse", [mouseX, mouseY]);
   portalShader.setUniform("u_mousey", [mouseY-5, mouseY+5]);
   portalShader.setUniform("u_pmouse", [pmouseX, pmouseY]);
-  rect(0,0,width, height);
+  portalShader.setUniform("mousePressed", mouseIsPressed);
+  push();
+  plane(windowWidth, windowHeight);
+  pop();
 }
