@@ -48,6 +48,8 @@ function setup() {
   ///////////////SOUND_GENERATE//////////////
   setupOscillator();
   startOscillator();
+  mic = new p5.AudioIn();
+  mic.start();
 }
 
 function draw() {
@@ -55,6 +57,7 @@ function draw() {
   background(0);
   renderSkyBox(); // draw skybox
   orbitControl();
+  stateChange();
 
   for (let i = 0; i<7; i++){
     objects[i].render();
@@ -68,6 +71,8 @@ function draw() {
   updateOscillator();
   stopOscillator();
   playOscillator();
+  detectpeak();
+  console.log(currentState);
 }
 
 function windowResized() {

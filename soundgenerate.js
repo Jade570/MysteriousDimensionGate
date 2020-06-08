@@ -1,6 +1,16 @@
 let osc_sin, osc_tri, osc_saw, osc_square;
-let freq, amp, playing;
+let freq, amp, playing, mic, peak, vol;
 let sel;
+
+function detectpeak() {
+  vol = mic.getLevel();
+
+  if (vol > 0.3) {
+    peak = true;
+  } else {
+    peak = false;
+  }
+}
 
 function setupOscillator(){
   osc_sin = new p5.Oscillator('sine');
@@ -8,12 +18,14 @@ function setupOscillator(){
   osc_saw = new p5.Oscillator('sawtooth');
   osc_square = new p5.Oscillator('square');
 
+/*
   sel = createSelect();
   sel.position(10, 10);
   sel.option(1);
   sel.option(2);
   sel.option(3);
   sel.option(4);
+  */
 }
 
 function startOscillator() {
@@ -113,5 +125,25 @@ function updateOscillator() {
   freq = constrain(map(mouseY, height, 0, 100, 500), 100, 500);
   amp = constrain(map(mouseX, 0, width, 0, 1), 0, 1);
 
-  currentState = parseInt(sel.value());
+    //currentState = parseInt(sel.value());
+}
+
+
+function stateChange(){
+  if (peak == false){
+    if (mouseX < width/2){
+      currentState = 1;
+    }
+    else if (mouseX >= width/2){
+      currentState = 2;
+    }
+  }
+  else if(peak == true){
+    if (mouseX < width/2){
+      currentState = 3;
+    }
+    else if (mouseX >= width/2){
+      currentState = 4;
+    }
+  }
 }
