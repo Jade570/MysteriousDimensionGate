@@ -1,7 +1,7 @@
 let starShader, portalShader, skyboxShader;
 let currentState;
 let img = [];
-let daily = [], isaac = [], tetris = [];
+let daily = [], isaac = [], tetris = [], star = [];
 let objects = [];
 let cup;
 let gl1, gl2; // WebGL pointer
@@ -26,6 +26,7 @@ function preload() {
   for (let i = 0; i<7; i++){
     isaac[i] = loadImage("assets/isaac/"+i+".png");
     tetris[i] = loadImage("assets/tetris/"+i+".png");
+    star[i] = loadImage("assets/star/"+i+".png");
     daily[i] = loadImage("assets/daily/"+i+".png");
   }
 }
@@ -72,7 +73,6 @@ function draw() {
   stopOscillator();
   playOscillator();
   detectpeak();
-  console.log(currentState);
 }
 
 function windowResized() {

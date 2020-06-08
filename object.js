@@ -68,6 +68,7 @@ function themeChange(){
 
 
     case 4:
+    return star[int(random(7))];
     break;
   }
 }
