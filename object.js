@@ -28,7 +28,7 @@ class Portal_Object{
   updatePos(){ //while mouse pressed
     if (this.y >= this.origy+300){
       this.origx = mouseX - windowWidth/2 + random(-50, 50);
-      this.origy = mouseY - windowHeight/2 + random(-30, 30);
+      this.origy = mouseY - windowHeight/2 + random(-30, 30) + 100;
       this.x = this.origx;
       this.y = this.origy;
       this.z = 0;
