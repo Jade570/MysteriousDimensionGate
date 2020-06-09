@@ -17,15 +17,6 @@ function setupOscillator(){
   osc_tri = new p5.Oscillator('triangle');
   osc_saw = new p5.Oscillator('sawtooth');
   osc_square = new p5.Oscillator('square');
-
-/*
-  sel = createSelect();
-  sel.position(10, 10);
-  sel.option(1);
-  sel.option(2);
-  sel.option(3);
-  sel.option(4);
-  */
 }
 
 function startOscillator() {
@@ -58,27 +49,11 @@ cnv.mousePressed(function(){
 
 function stopOscillator() {
   cnv.mouseReleased(function(){
-    switch (currentState) {
-      case 1:
         osc_sin.amp(0, 0.5);
         osc_saw.amp(0, 0.5);
-        break;
-
-      case 2:
-        osc_square.amp(0, 0.5);
-        osc_saw.amp(0, 0.5);
-        break;
-
-      case 3:
         osc_tri.amp(0, 0.5);
         osc_square.amp(0, 0.5);
-        break;
 
-      case 4:
-        osc_saw.amp(0, 0.5);
-        osc_tri.amp(0, 0.5);
-        break;
-    }
     playing = false;
   });
 }
@@ -125,7 +100,6 @@ function updateOscillator() {
   freq = constrain(map(mouseY, height, 0, 100, 500), 100, 500);
   amp = constrain(map(mouseX, 0, width, 0, 1), 0, 1);
 
-    //currentState = parseInt(sel.value());
 }
 
 

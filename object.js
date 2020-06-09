@@ -1,4 +1,3 @@
-let pState;
 
 class Portal_Object{
   constructor(){

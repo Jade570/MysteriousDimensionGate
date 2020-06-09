@@ -1,5 +1,5 @@
-let starShader, portalShader, skyboxShader;
-let currentState;
+let starShader, portalShader, lineShader, skyboxShader;
+let pState, currentState;
 let img = [];
 let daily = [], isaac = [], tetris = [], star = [];
 let objects = [];
@@ -10,9 +10,8 @@ let cnv;
 
 function preload() {
   skyboxShader = loadShader('shader/skybox.vert', 'shader/skybox.frag');
-  starShader = loadShader('shader/star.vert', 'shader/star.frag');
   portalShader = loadShader('shader/portal.vert', 'shader/portal.frag');
-
+  lineShader = loadShader('shader/line.vert', 'shader/line.frag');
   // load six cubemap textures
 
   img[0] = loadImage("assets/sample/front.png");
@@ -57,7 +56,6 @@ function draw() {
 
   background(0);
   renderSkyBox(); // draw skybox
-  orbitControl();
   stateChange();
 
   for (let i = 0; i<7; i++){
@@ -66,6 +64,7 @@ function draw() {
 
   push();
   fill(0,0,0,0);
+  setupLine();
   setupPortal();
   pop();
   /////////////////SOUND_GENERATE/////////////////

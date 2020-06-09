@@ -78,6 +78,19 @@ function renderSkyBox() {
   resetShader();
 }
 
+function setupLine(){
+  shader(lineShader);
+  lineShader.setUniform("u_resolution", [width, height]);
+  lineShader.setUniform("u_time", frameCount*0.01);
+  lineShader.setUniform("u_mouse", [mouseX, mouseY]);
+  lineShader.setUniform("u_mousey", [mouseY-5, mouseY+5]);
+  lineShader.setUniform("u_pmouse", [pmouseX, pmouseY]);
+  lineShader.setUniform("mousePressed", mouseIsPressed);
+  push();
+  plane(windowWidth, windowHeight);
+  pop();
+}
+
 function setupPortal(){
   shader(portalShader);
   portalShader.setUniform("u_resolution", [width, height]);
