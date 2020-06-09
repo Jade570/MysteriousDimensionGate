@@ -58,20 +58,32 @@ function draw() {
   renderSkyBox(); // draw skybox
   stateChange();
 
-  for (let i = 0; i<7; i++){
-    objects[i].render();
+  if(keyIsDown(CONTROL)){
+    orbitControl();
+  }
+  else{
+    for (let i = 0; i<7; i++){
+      objects[i].render();
+    }
+
+    push();
+    fill(0,0,0,0);
+    setupLine();
+    setupPortal();
+    pop();
+    /////////////////SOUND_GENERATE/////////////////
+    updateOscillator();
+    stopOscillator();
+    playOscillator();
+    detectpeak();
   }
 
-  push();
-  fill(0,0,0,0);
-  setupLine();
-  setupPortal();
-  pop();
-  /////////////////SOUND_GENERATE/////////////////
-  updateOscillator();
-  stopOscillator();
-  playOscillator();
-  detectpeak();
+}
+
+function keyPressed(){
+  if(keyCode == CONTROL){
+
+  }
 }
 
 function windowResized() {

@@ -31,7 +31,7 @@ class Portal_Object{
       this.origy = mouseY - windowHeight/2 + random(-30, 30) + 100;
       this.x = this.origx;
       this.y = this.origy;
-      this.z = 0;
+      this.z = -30;
       this.t = 0;
       this.texture = themeChange();
       this.g = random(0.5, 3);
